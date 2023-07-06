@@ -1,0 +1,121 @@
+
+##########################........installing ........packages####################################################
+
+after installing package....using Microsoft.EntityFrameworkCore;  appears at page top
+
+
+
+//.................................................
+using Microsoft.EntityFrameworkCore;
+//.................................................
+namespace SuperHeroApi_App.Data
+{
+    public class DataContext : DbContext
+    {
+
+
+
+    }
+}
+
+#######################################
+
+...install packages..from nuget packages
+
+-microsoft.entityframeworkcore.design....stable release....we need this for our migration
+
+-microsoft.entityframeworkcore.sqlserver....
+
+-go to google and 
+	-download sqlserver express...it's free
+	-download sqlserver management studio...help u display your database
+
+NB...you'll see alot of warnings because we do not use asynchronous methods at the moment
+
+
+
+#######################################
+
+click on the project name to see the new packages you downloaded
+
+####################.....now we need to add a connection stream......###################
+
+ -how we connect to the sqlserver database 
+	we add connectionStrings in the appsettings.json
+-set database name....superHerodb
+-connection to true
+
+
+appsettings.json
+
+//..........................................
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=localhost\\sqlexpress;database=superHerodb;trusted_connection=true"
+  },
+ 
+//..........................................
+
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+//#############################
+
+
+
+#################....install entityframework.....######################
+with the package manager console
+
+-view
+   -otherwindows
+        -package manager console
+
+##
+type on console....
+
+to check = dotnet ef
+to install = dotnet tool install --global dotnet-ef
+to install = dotnet tool uninstall --global dotnet-ef
+
+
+
+
+
+#######################################
+the superHeroController will inject the DataContext
+then we can access the superHeroController from the database
+
+
+we need a contructor to do this 
+
+using Microsoft.EntityFrameworkCore;
+
+namespace SuperHeroApi_App.Data
+{
+    public class DataContext : DbContext
+    {
+//..................................................................................................
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { } 
+
+    }
+//..................................................................................................
+
+}
+
+#######################################
+we have to add a DB set to see the migration...representation of the database
+#######################################
+
+#######################################
+	
+
+
+
+
+#######################################

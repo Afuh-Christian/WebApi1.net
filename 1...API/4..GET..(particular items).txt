@@ -1,0 +1,201 @@
+..........
+lets add the items so we will have a list to retrieve a single item from 
+
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHeroApi_App.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SuperHeroController : ControllerBase
+    {
+
+        private static List<superHero> heroes = new List<superHero>()
+        {
+//........................................................
+                new superHero {
+                    Id= 1,
+                    Name="Spider Man",
+                    Firstname="Peter",
+                    Lastname="Parker",
+                    Place="New York City"
+                } ,
+
+                 new superHero {
+                    Id= 2,
+                    Name="Iron Man",
+                    Firstname="Tony",
+                    Lastname="Stark",
+                    Place="Mexico city"
+                }
+//........................................................
+
+         };
+
+
+        [HttpGet]
+        [Route("list_heroes")]
+        public async Task<ActionResult<List<superHero>>> GetHero()
+        {
+            return Ok(heroes);
+        }
+
+
+        [HttpPost("create_hero")]
+      
+        public async Task<ActionResult<List<superHero>>> AddHero(superHero hero)
+        {
+            heroes.Add(hero);
+            return Ok(heroes);
+        } 
+            }
+}
+
+################################################
+
+to retrieve
+
+-return type is now ...Task<ActionResult<superHero>>
+-it takes parameter id of type int...int id
+-we add parameter in the route .....[HttpGet("{id}"]
+
+//........................................................
+
+       [HttpGet("{id}"]
+        public async Task<ActionResult<superHero>> GetSingleHero(int id)
+        {
+            var hero = heroes.Find(h => h.Id == id);
+
+            return Ok(hero);
+        }
+
+//........................................................
+
+
+###############
+
+we can add an if statement to check for errors
+
+
+      [HttpGet("{id}")]
+        public async Task<ActionResult<superHero>> GetSingleHero(int id)
+        {
+            var hero = heroes.Find(h => h.Id == id);
+            if(hero == null)
+            {
+                return BadRequest("Hero not found");
+            }
+            else
+            {
+                return Ok(hero);
+            }
+            
+        }
+
+
+###############################################################
+
+now in the project
+
+controller
+	SuperHeroController.cs
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHeroApi_App.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SuperHeroController : ControllerBase
+    {
+
+        private static List<superHero> heroes = new List<superHero>()
+        {
+
+                new superHero {
+                    Id= 1,
+                    Name="Spider Man",
+                    Firstname="Peter",
+                    Lastname="Parker",
+                    Place="New York City"
+                } ,
+
+                 new superHero {
+                    Id= 2,
+                    Name="Iron Man",
+                    Firstname="Tony",
+                    Lastname="Stark",
+                    Place="Mexico city"
+                }
+         };
+
+        //..............get............
+        [HttpGet]
+        [Route("list_heroes")]
+        public async Task<ActionResult<List<superHero>>> GetHero()
+        {
+            return Ok(heroes);
+        }
+
+
+        //..............retrieve.............
+        [HttpGet("{id}")]
+        public async Task<ActionResult<superHero>> GetSingleHero(int id)
+        {
+            var hero = heroes.Find(h => h.Id == id);
+            if(hero == null)
+            {
+                return BadRequest("Hero not found");
+            }
+            else
+            {
+                return Ok(hero);
+            }
+            
+        }
+
+
+        //.................post.................
+        [HttpPost("create_hero")]
+        public async Task<ActionResult<List<superHero>>> AddHero(superHero hero)
+        {
+            heroes.Add(hero);
+            return Ok(heroes);
+        } 
+            }
+}
+
+
+
+restart the app and run ..everything works
+############################################################
+
+############################################################
+
+############################################################
+
+
+############################################################
+
+
+
+############################################################
+
+
+############################################################
+
+############################################################
+
+############################################################
+
+
+
+
+
+
+
+
+

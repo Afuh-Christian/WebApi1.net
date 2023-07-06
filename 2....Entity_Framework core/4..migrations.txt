@@ -1,0 +1,40 @@
+#########################
+on package command
+
+-cd SuperHeroApi_App
+
+-dotnet ef migrations add CreateInitial
+.....CreateInitial ..name of migration
+
+
+now you'll see a Migrations folder on the project with the first migration applied
+NB.save all changes first
+
+#######################333
+Migrations..folder
+   -202298497092705487_CreateInitial.cs
+
+they set the Id to primary key and auto increment .... 
+
+UP method == creating the table
+DOWN method == dropping the table
+
+.....to update table .....this will create a database even if we do not have one
+on package command 
+-dotnet ef database update 
+
+#################################################
+
+########################################################
+
+########################################################
+
+########################################################
+
+############################
+
+############################
+
+############################
+
+############################

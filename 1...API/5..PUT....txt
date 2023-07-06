@@ -1,0 +1,145 @@
+
+
+##########################################################
+
+-we get the item to update
+-we update it with the new alterhero object passed as a parameter
+-we return the list of heros
+
+
+ //.........put.....................
+        [HttpPut("update_hero")]
+        public async Task<ActionResult<List<superHero>>> UpdateHero(superHero alterhero)
+        { 
+
+            //.............to get hero to alter......................
+              var hero = heroes.Find(h => h.Id == alterhero.Id);
+            if(hero == null)
+            {
+                return BadRequest("Hero not found");
+            }
+            //.........................................................
+
+            hero.Name = alterhero.Name;
+            hero.Firstname = alterhero.Firstname;
+            hero.Lastname = alterhero.Lastname;
+            hero.Place = alterhero.Place;
+
+            return Ok(heroes);
+    
+        }
+##########################################################
+
+now in full....
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHeroApi_App.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SuperHeroController : ControllerBase
+    {
+
+        private static List<superHero> heroes = new List<superHero>()
+        {
+
+                new superHero {
+                    Id= 1,
+                    Name="Spider Man",
+                    Firstname="Peter",
+                    Lastname="Parker",
+                    Place="New York City"
+                } ,
+
+                 new superHero {
+                    Id= 2,
+                    Name="Iron Man",
+                    Firstname="Tony",
+                    Lastname="Stark",
+                    Place="Mexico city"
+                }
+         };
+
+        //..............get............
+        [HttpGet]
+        [Route("list_heroes")]
+        public async Task<ActionResult<List<superHero>>> GetHero()
+        {
+            return Ok(heroes);
+        }
+
+
+        //..............retrieve.............
+        [HttpGet("{id}")]
+        public async Task<ActionResult<superHero>> GetSingleHero(int id)
+        {
+            var hero = heroes.Find(h => h.Id == id);
+            if (hero == null)
+            {
+                return BadRequest("Hero not found");
+            }
+            else
+            {
+                return Ok(hero);
+            }
+
+        }
+
+
+        //.................post.................
+        [HttpPost("create_hero")]
+        public async Task<ActionResult<List<superHero>>> AddHero(superHero hero)
+        {
+            heroes.Add(hero);
+            return Ok(heroes);
+        }
+
+
+//####################..................put....................###########
+
+        //.........put.....................
+        [HttpPut("update_hero")]
+        public async Task<ActionResult<List<superHero>>> UpdateHero(superHero alterhero)
+        { 
+
+            //.............to get hero to alter......................
+              var hero = heroes.Find(h => h.Id == alterhero.Id);
+            if(hero == null)
+            {
+                return BadRequest("Hero not found");
+            }
+            //.........................................................
+
+            hero.Name = alterhero.Name;
+            hero.Firstname = alterhero.Firstname;
+            hero.Lastname = alterhero.Lastname;
+            hero.Place = alterhero.Place;
+
+            return Ok(heroes);
+
+
+               
+        }
+
+//####################..................put end....................###########
+
+    }
+    }
+
+
+restart the app and run ... it  works
+
+  
+...it has displayed the list in another route...  [HttpPut("update_hero")]
+####################################################################################################################
+
+when doing this with entity framework and a database 
+-make call to the database 
+-get the hero
+-make the changes
+-And save them back to the database 
+####################################################################################################################
+
+

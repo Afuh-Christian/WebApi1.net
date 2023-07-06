@@ -1,0 +1,88 @@
+....
+
+-we will get the superHero list ... 
+-we will create a superHero object...we pass an object of type ....superHero as parameter
+-we can change the route if we wish to 
+
+NB the method name after the function return type does not matter
+
+//............................................
+ [HttpPost("create_hero")]
+      
+        public async Task<ActionResult<List<superHero>>> AddHero(superHero hero)
+        {
+            heroes.Add(hero);
+            return Ok(heroes);
+        } 
+//............................................
+
+NB.....we can add [FromBody] in 
+  public async Task<ActionResult<List<superHero>>> AddHero([FromBody]superHero hero)
+....but since we are using a complex type in the parameter, the rest api will asume it comes from the body
+
+
+#######################################################
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHeroApi_App.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SuperHeroController : ControllerBase
+    {
+
+        private static List<superHero> heroes = new List<superHero>()
+        {
+
+                new superHero {
+                    Id= 1,
+                    Name="Spider Man",
+                    Firstname="Peter",
+                    Lastname="Parker",
+                    Place="New York City"
+                }
+         };
+
+
+        [HttpGet]
+        [Route("list_heroes")]
+        public async Task<ActionResult<List<superHero>>> GetHero()
+        {
+            return Ok(heroes);
+        }
+
+//............................................
+        [HttpPost("create_hero")]
+      
+        public async Task<ActionResult<List<superHero>>> AddHero(superHero hero)
+        {
+            heroes.Add(hero);
+            return Ok(heroes);
+        } 
+
+//............................................
+
+            }
+}
+
+
+
+Now you restart the app ....
+
+the platform gives you an example data to submit ...
+You can edit the example if you wish to 
+
+it works fine
+
+NB ... this does not have auto generated id like in django
+#######################################################
+
+But when we restart the app ... all the heroes are gone because we do not store them in a database 
+
+
+#######################################################
+
+#######################################################
+
+

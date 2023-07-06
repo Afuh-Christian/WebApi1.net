@@ -1,0 +1,113 @@
+
+#######################################
+the superHeroController will inject the DataContext
+then we can access the superHeroController from the database
+
+
+we need a contructor to do this 
+
+using Microsoft.EntityFrameworkCore;
+
+namespace SuperHeroApi_App.Data
+{
+    public class DataContext : DbContext
+    {
+//..................................................................................................
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { } 
+
+    }
+//..................................................................................................
+
+}
+
+#######################################
+-we have to add a DB set to see the migration...representation of the database
+-this is a table we are adding
+
+  public DbSet<superHero> SuperHeroes { get; set; }
+
+#########
+
+using Microsoft.EntityFrameworkCore;
+
+namespace SuperHeroApi_App.Data
+{
+    public class DataContext : DbContext
+    {
+
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { } 
+
+        public DbSet<superHero> SuperHeroes { get; set; }
+
+    }    
+
+
+
+#######################################
+we need to register this in the program.cs
+
+-Program.cs
+
+global using SuperHeroApi_App
+
+builder.Services.AddDbContext<DataContext> //.....place this above the swaggger..
+
+###########........configuring the sql server...........
+global using Microsoft.EntityFrameworkCore;
+
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+#######################################
+Now we need to apply migrations on the console
+
+
+
+
+commands
+
+database = to update database
+migrations = to manage migrations ...we set the name of the migration when applying
+
+#######################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################################
+
+
+#######################################
+
+
+#######################################
+
+#######################################
+
+#######################################
+
+#######################################
+	
+
+
+
+
+#######################################

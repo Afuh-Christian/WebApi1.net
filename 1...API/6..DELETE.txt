@@ -1,0 +1,64 @@
+............................
+............................
+
+-pass id of hero to delete as parameter
+-get the hero
+-delete the hero
+-return the list of heros
+
+-we do not need to pass a route for this ...even at the update part 
+becuase we were returning the list of heroes which is suppose to 
+take us back to the get all heroes route...and not make another route to display all heroes
+
+NB..we are delete and not updating , that's why we don't pass and object as it's parameter
+
+##############################################################################
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<superHero>>> DeleteHero(int id)
+        {
+
+            var hero = heroes.Find(h => h.Id == id);
+            if (hero == null)
+            {
+                return BadRequest("Hero not found");
+            }
+            else
+            {
+                heroes.Remove(hero);
+                return Ok(heroes);
+            }
+
+        }
+
+it work's
+##############################################################################
+
+Nb..we can still pass this as the route .... [HttpDelete("delete/{id}")]
+###########################################################################################
+
+
+now in the next ...we see how to add database,intergrate with sql  etc
+
+#################################################################
+
+#################################################################
+
+#################################################################
+#################################################################
+
+#################################################################
+
+#################################################################
+
+#################################################################
+
+#################################################################
+
+#################################################################
+
+#################################################################
+
+#################################################################
+
+

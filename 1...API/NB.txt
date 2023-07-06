@@ -1,0 +1,14 @@
+
+
+NB...nomally we use  service with the repository pattern were we would 
+-add a contructor in the controller
+-inject the service there
+-the logic to get,post,put,delete etc would be then in the
+ services
+
+
+......
+
+but for now we are just learning the basics 
+
+this is the first step in the web api

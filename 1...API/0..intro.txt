@@ -1,0 +1,249 @@
+....
+
+ASP.NET  Core web API  
+
+#############################################
+
+project name : superheosAPI 
+
+#############################################
+
+-.Net  6.0 
+-AUTH  type : none
+-configure for https
+-use controller
+-open API  support (for testing the API )
+
+#############################################
+
+NB when you star without debugging it will go to 
+
+Properties
+	lauchSettings.json
+
+ "profiles": {
+    "SuperHerosAPI": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+//....................................................................................
+      "applicationUrl": "https://localhost:7275;http://localhost:5275",
+//....................................................................................
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+
+
+#############################################
+
+
+how to check for implementation
+
+F12
+
+
+#############################################
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHerosAPI.Controllers
+{
+//...............Apicontroller..............................
+    [ApiController]
+    [Route("[controller]")]
+//..................................................................................
+    public class WeatherForecastController : ControllerBase
+    {
+        private static readonly string[] Summaries = new[]
+        {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet(Name = "GetWeatherForecast")]
+        public IEnumerable<WeatherForecast> Get()
+        {
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
+    }
+}
+
+-[Apicontroller]...are used to server https responses
+-[Route("[controller]")]...a naming convention...everything before controller
+  => route = WeatherForecast...because..it's the name before controller 
+
+   /WeatherForecast
+
+-there's a contructor and dependency injection in action
+
+Nb.... [HttpGet(Name = "GetWeatherForecast")]....we have to use this for swagger
+ => if you create a method called Get() , the web API then knows it's a get method meaning 
+ ,we wish to use the httprequest method
+
+
+
+#############################################
+Name = "GetWeatherForecast".......Does not mean it is the route
+
+let's take it out and see 
+
+
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHeroApi_App.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
+    {
+        private static readonly string[] Summaries = new[]
+        {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+//................................................
+        [HttpGet]
+//................................................
+        public IEnumerable<WeatherForecast> Get()
+        {
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+
+            })
+            .ToArray();
+        }
+    }
+}
+
+
+Everything still runs smoothly
+
+#############################################
+we can also give it a route ....        [Route("weather")]
+
+
+
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHeroApi_App.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
+    {
+        private static readonly string[] Summaries = new[]
+        {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+//................................................
+        [HttpGet]
+ [Route("weather")]
+//................................................
+        public IEnumerable<WeatherForecast> Get()
+        {
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+
+            })
+            .ToArray();
+        }
+    }
+}
+
+
+
+And now you see that route added to the swagger platform
+
+   /WeatherForecast/weather
+
+#############################################
+
+we can still do it like this 
+
+ [HttpGet("weather")]
+
+
+
+
+
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace SuperHeroApi_App.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
+    {
+        private static readonly string[] Summaries = new[]
+        {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+//................................................
+ [HttpGet("weather")]
+//................................................
+        public IEnumerable<WeatherForecast> Get()
+        {
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+
+            })
+            .ToArray();
+        }
+    }
+}
+
+
+   /WeatherForecast/weather
+
+#############################################
+
+
+Now let's start a new project
+
+#############################################
+
